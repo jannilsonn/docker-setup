@@ -10,12 +10,12 @@ main() {
   echo "DONE (files)"
   echo "~~~~~~~~~~~~~~~"
 
-  docker-compose run --no-deps web rails new . --force --database=postgresql
+  docker-compose run --no-deps --rm web rails new . --force --database=postgresql
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (rails new)"
   echo "~~~~~~~~~~~~~~~"
 
-  docker-compose build
+  docker-compose build --no-cache
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (build)"
   echo "~~~~~~~~~~~~~~~"
@@ -25,7 +25,7 @@ main() {
   echo "DONE (config db)"
   echo "~~~~~~~~~~~~~~~"
 
-  docker-compose run web rake db:create
+  docker-compose run --rm web rake db:create
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (db:create)"
   echo "~~~~~~~~~~~~~~~"
