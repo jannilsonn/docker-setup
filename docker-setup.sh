@@ -27,6 +27,7 @@ options() {
 
 files() {
   dockerfile
+  docker_compose
 }
 
 dockerfile() {
@@ -57,6 +58,34 @@ EXPOSE 3000
 COPY . $INSTALL_PATH
 
 CMD ["rails", "server", "-b", "0.0.0.0"]' >> Dockerfile
+}
+
+docker_compose() {
+  echo 'version: "3.9"
+services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - data:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    container_name: '$project_name'
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/opt/app
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
+volumes:
+  data:' >> docker-compose.yml
 }
 
 main
