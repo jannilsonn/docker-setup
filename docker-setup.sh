@@ -28,6 +28,8 @@ options() {
 files() {
   dockerfile
   docker_compose
+  gemfile
+  touch Gemfile.lock
 }
 
 dockerfile() {
@@ -86,6 +88,11 @@ services:
       - db
 volumes:
   data:' >> docker-compose.yml
+}
+
+gemfile() {
+  echo "source 'https://rubygems.org'
+$gem_rails" >> Gemfile
 }
 
 main
