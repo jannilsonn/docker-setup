@@ -30,6 +30,7 @@ files() {
   docker_compose
   gemfile
   touch Gemfile.lock
+  entrypoint
 }
 
 dockerfile() {
@@ -93,6 +94,15 @@ volumes:
 gemfile() {
   echo "source 'https://rubygems.org'
 $gem_rails" >> Gemfile
+}
+
+entrypoint() {
+  echo '#!/bin/bash
+set -e
+
+rm -f /$project_name/tmp/pids/server.pid
+
+exec "$@"' >> entrypoint.sh
 }
 
 main
