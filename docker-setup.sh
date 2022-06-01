@@ -14,6 +14,11 @@ main() {
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (rails new)"
   echo "~~~~~~~~~~~~~~~"
+
+  docker-compose build
+  echo "~~~~~~~~~~~~~~~"
+  echo "DONE (build)"
+  echo "~~~~~~~~~~~~~~~"
 }
 
 options() {
