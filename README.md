@@ -28,6 +28,8 @@ Um arquivo shell script para automatizar a criação de um projeto em Ruby on Ra
 ## Projeto
 - `docker-compose run --no-deps --rm web rails new . --force --database=postgresql` cria um container sem depender do `service` `db`, executa o `rails new` utilizando o Postgresql em `web`.
 
+- `docker-compose build --no-cache` constrói a imagem com o projeto já criado.
+
 ## Variáveis - Banco de Dados
 - Nessa etapa as variáveis de ambiente do banco de dados que estão no `docker-compose.yml` são usadas no `database.yml`.
 
