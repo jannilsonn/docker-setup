@@ -24,6 +24,13 @@ main() {
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (config db)"
   echo "~~~~~~~~~~~~~~~"
+
+  docker-compose run web rake db:create
+  echo "~~~~~~~~~~~~~~~"
+  echo "DONE (db:create)"
+  echo "~~~~~~~~~~~~~~~"
+  
+  echo "run 'docker-compose up'"
 }
 
 options() {
