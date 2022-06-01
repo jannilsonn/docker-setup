@@ -19,6 +19,11 @@ main() {
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (build)"
   echo "~~~~~~~~~~~~~~~"
+
+  database
+  echo "~~~~~~~~~~~~~~~"
+  echo "DONE (config db)"
+  echo "~~~~~~~~~~~~~~~"
 }
 
 options() {
@@ -113,6 +118,34 @@ set -e
 rm -f /$project_name/tmp/pids/server.pid
 
 exec "$@"' >> entrypoint.sh
+}
+
+database() {
+  path_database="${PWD}/config/database.yml"
+
+  rm -rf $path_database
+
+  echo 'default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  host: <%= ENV.fetch("POSTGRES_HOST") %>
+
+development:
+  <<: *default
+  database: app_development
+  
+test:
+  <<: *default
+  database: app_test
+  
+production:
+  <<: *default
+  database: app_production
+  username: app
+  password: <%= ENV["APP_DATABASE_PASSWORD"] %>' >> $path_database
 }
 
 main
