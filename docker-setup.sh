@@ -9,6 +9,11 @@ main() {
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (files)"
   echo "~~~~~~~~~~~~~~~"
+
+  docker-compose run --no-deps web rails new . --force --database=postgresql
+  echo "~~~~~~~~~~~~~~~"
+  echo "DONE (rails new)"
+  echo "~~~~~~~~~~~~~~~"
 }
 
 options() {
