@@ -2,7 +2,7 @@
 
 Um arquivo shell script para automatizar a criação de um projeto em Ruby on Rails dockerizado, facilitando o setup inicial.
 
-<br>
+[Baseado na documentação do Docker](https://docs.docker.com/samples/rails/)
 
 # Ao executar o script
 
@@ -13,8 +13,6 @@ Um arquivo shell script para automatizar a criação de um projeto em Ruby on Ra
 - Em seguida informe  a versão do Ruby que deseja usar.
 
 - Logo após a versão do Rails que deseja utilizar no seu projeto.
-
-<br>
 
 ## Arquivos
 >Obs: Para que tudo funcione corretamente é necessário criar alguns arquivos.
@@ -27,22 +25,14 @@ Um arquivo shell script para automatizar a criação de um projeto em Ruby on Ra
 
 - `entrypoint.sh` vem para corrigir um problema do Rails, que impede a reinicialização do servidor caso já exista um `server.pid`.
 
-<br>
-
 ## Projeto
 - `docker-compose run --no-deps --rm web rails new . --force --database=postgresql` cria um container sem depender do `service` `db`, executa o `rails new` utilizando o Postgresql em `web`.
-
-<br>
 
 ## Variáveis - Banco de Dados
 - Nessa etapa as variáveis de ambiente do banco de dados que estão no `docker-compose.yml` são usadas no `database.yml`.
 
-<br>
-
 ## Banco de dados
 - `docker-compose run --rm web rake db:create` para que o banco de dados seja criado com as novas variáveis.
-
-<br>
 
 # Como usar o script
 
