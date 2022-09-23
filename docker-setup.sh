@@ -10,7 +10,11 @@ main() {
   echo "DONE (files)"
   echo "~~~~~~~~~~~~~~~"
 
-  docker-compose run --no-deps --rm web rails new . --force --database=postgresql
+  if [ $api = "S" ] || [ $api = "y" ]; then
+    docker-compose run --no-deps --rm web rails new . --api --force --database=postgresql
+  else
+    docker-compose run --no-deps --rm web rails new . --force --database=postgresql
+  fi
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (rails new)"
   echo "~~~~~~~~~~~~~~~"
@@ -29,7 +33,7 @@ main() {
   echo "~~~~~~~~~~~~~~~"
   echo "DONE (db:create)"
   echo "~~~~~~~~~~~~~~~"
-  
+
   echo "run 'docker-compose up'"
 }
 
@@ -40,6 +44,8 @@ options() {
   [ -z $ruby ] && { ruby="latest" }
   echo "~~~~~~~~~~~~~~~"
   echo "Rails version:"; read rails
+  echo "~~~~~~~~~~~~~~~"
+  echo "Just Rails API? Y/N"; read api
   if [ -z $rails ]; then
     gem_rails="gem 'rails'"
   else
@@ -57,7 +63,7 @@ files() {
 
 dockerfile() {
   echo 'FROM ruby:'$ruby'
-  
+
 ENV INSTALL_PATH /opt/app
 
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
@@ -103,7 +109,7 @@ services:
       - 3000:3000
     volumes:
       - .:/opt/app
-    environment: 
+    environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
@@ -143,11 +149,11 @@ database() {
 development:
   <<: *default
   database: app_development
-  
+
 test:
   <<: *default
   database: app_test
-  
+
 production:
   <<: *default
   database: app_production
